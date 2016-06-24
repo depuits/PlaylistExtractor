@@ -1,0 +1,44 @@
+//enable visual styles
+CREATEPROCESS_MANIFEST_RESOURCE_ID RT_MANIFEST "PlaylistExtractor.exe.manifest"
+
+
+#include <windows.h>
+#include "resource.h"
+
+
+////////
+//menu//
+////////
+501 MENU
+	BEGIN
+		POPUP "&File"
+		BEGIN
+			MENUITEM "&Open...", IDM_OPEN
+			MENUITEM "&Close", IDM_CLOSE
+			MENUITEM SEPARATOR
+			MENUITEM "&Exit", IDM_EXIT
+		END
+		POPUP "&Options"
+		BEGIN
+			MENUITEM "&Copy files", IDM_COPY
+			MENUITEM SEPARATOR
+			MENUITEM "&Find...", IDM_FIND
+		END
+		POPUP "&Help"
+		BEGIN
+			MENUITEM "&Report bug", IDM_BUGR
+			MENUITEM SEPARATOR
+			MENUITEM "&About", IDM_ABOUT
+		END
+	END
+
+//////////
+// icon //
+//////////
+IDI_ICON	ICON	"resource/icon/icon.ico"
+
+////////////
+// bitmap //
+////////////
+IDB_TB_CHECK0	BITMAP	"resource/btn/checkbox_0.bmp"
+IDB_TB_CHECK1	BITMAP	"resource/btn/checkbox_1.bmp"

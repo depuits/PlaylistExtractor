@@ -1,0 +1,23 @@
+<?wpl version="1.0"?>
+<smil>
+    <head>
+        <meta name="Generator" content="Microsoft Windows Media Player -- 12.0.7600.16667"/>
+        <meta name="ItemCount" content="5"/>
+        <meta name="IsFavorite"/>
+        <meta name="ContentPartnerListID"/>
+        <meta name="ContentPartnerNameType"/>
+        <meta name="ContentPartnerName"/>
+        <meta name="Subtitle"/>
+        <author/>
+        <title>123</title>
+    </head>
+    <body>
+        <seq>
+            <media src="..\..\..\..\Music\Dj FRANK ft Danzel - My arms keep missing you.mp3" tid="{76681DA2-91CE-43F2-905F-F185F376D0E6}"/>
+            <media src="..\DaRude - Sandstorm.mp3"/>
+            <media src="..\VA-The_Ultimate_80s-5CD-2009-COS\112-daryl_hall_and_john_oates-i_cant_go_for_that_(no_can_do).mp3"/>
+            <media src="..\Donna&apos;s Top 100 Eighties\050 David Bowie - Let&apos;s Dance.mp3"/>
+            <media src="..\..\..\tmp\02 Someday Out of the Blue [Theme from el Dorado].mp3"/>
+        </seq>
+    </body>
+</smil>
