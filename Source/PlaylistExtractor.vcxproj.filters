@@ -48,6 +48,12 @@
     <ClCompile Include="WinMain.cpp">
       <Filter>Engine Files</Filter>
     </ClCompile>
+    <ClCompile Include="Control.cpp">
+      <Filter>Engine Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Checkbox.cpp">
+      <Filter>Engine Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PlaylistExtractor.h">
@@ -94,6 +100,12 @@
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Control.h">
+      <Filter>Engine Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Checkbox.h">
+      <Filter>Engine Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

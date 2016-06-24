@@ -17,7 +17,7 @@ m_ClientHeight(410),
 m_isCopie(false),
 
 m_sBugReport(_T("To report a bug send a mail to\ncolmanjoeri@gmail.com\nor go to\nhttps://sourceforge.net/projects/playlistextract/")),
-m_sAbout(_T("Made by Joeri Colman\nVersion: 0.05")),
+m_sAbout(_T("Made by Joeri Colman\nVersion: 0.06")),
 
 m_pLBMusicList(0),
 m_pTxtDirection(0),
@@ -56,28 +56,28 @@ void PlaylistExtractor::InitMainWindow(int showCmd)
 	//HMENU menu;
 	WNDCLASSEX wcex;
 
-    wcex.cbSize = sizeof(WNDCLASSEX);
-    wcex.style          = CS_HREDRAW | CS_VREDRAW;
+	wcex.cbSize = sizeof(WNDCLASSEX);
+	wcex.style          = CS_HREDRAW | CS_VREDRAW;
 	wcex.lpfnWndProc    = PlaylistExtractor::WndProc;
-    wcex.cbClsExtra     = 0;
-    wcex.cbWndExtra     = 0;
-    wcex.hInstance      = m_hAppInst;
-    wcex.hIcon          = LoadIcon(m_hAppInst, MAKEINTRESOURCE(IDI_ICON));
-    wcex.hCursor        = LoadCursor(NULL, IDC_ARROW);
-    wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
-    wcex.lpszMenuName   = NULL;
-    wcex.lpszClassName  = szWindowClass;
-    wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_ICON));
+	wcex.cbClsExtra     = 0;
+	wcex.cbWndExtra     = 0;
+	wcex.hInstance      = m_hAppInst;
+	wcex.hIcon          = LoadIcon(m_hAppInst, MAKEINTRESOURCE(IDI_ICON));
+	wcex.hCursor        = LoadCursor(NULL, IDC_ARROW);
+	wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
+	wcex.lpszMenuName   = NULL;
+	wcex.lpszClassName  = szWindowClass;
+	wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_ICON));
 
 	// register the app
 	if (!RegisterClassEx(&wcex))
-    {
-        MessageBox(NULL,
-            _T("Call to RegisterClassEx failed!"),
-            szWindowClass,
-            NULL);
-        PostQuitMessage(0);
-    }
+	{
+		MessageBox(NULL,
+			_T("Call to RegisterClassEx failed!"),
+			szWindowClass,
+			NULL);
+		PostQuitMessage(0);
+	}
 
 	// createwindow
 	// The parameters to CreateWindow explained:
@@ -94,7 +94,7 @@ void PlaylistExtractor::InitMainWindow(int showCmd)
 
 	// Compute window rectangle dimensions based on requested client area dimensions.
 	RECT R = { 0, 0, m_ClientWidth, m_ClientHeight };
-    AdjustWindowRect(&R, WS_OVERLAPPEDWINDOW, true);
+	AdjustWindowRect(&R, WS_OVERLAPPEDWINDOW, true);
 	int width  = R.right - R.left;
 	int height = R.bottom - R.top;
 
@@ -118,7 +118,7 @@ void PlaylistExtractor::InitMainWindow(int showCmd)
 			_T("Call to CreateWindow failed!"),
 			szWindowClass,
 			NULL);
-        PostQuitMessage(0);
+		PostQuitMessage(0);
 	}
 
 	//move window to the center of the screen
@@ -143,20 +143,20 @@ void PlaylistExtractor::InitMainWindow(int showCmd)
 int PlaylistExtractor::Run()
 {
 	MSG msg;
-    while (GetMessage(&msg, NULL, 0, 0))
-    {
-        TranslateMessage(&msg);
-        DispatchMessage(&msg);
-    }
+	while (GetMessage(&msg, NULL, 0, 0))
+	{
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
+	}
 
-    return (int) msg.wParam;
+	return (int) msg.wParam;
 }
 
 LRESULT CALLBACK PlaylistExtractor::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	MAINAPP->SetHwnd(hWnd);
 	PAINTSTRUCT ps;
-    HDC hdc;
+	HDC hdc;
 
 	//set min size for window
 	if(message == WM_GETMINMAXINFO)
@@ -175,20 +175,20 @@ LRESULT CALLBACK PlaylistExtractor::WndProc(HWND hWnd, UINT message, WPARAM wPar
 	}
 
 	//other messages
-    switch (message)
-    {
+	switch (message)
+	{
 	case WM_PAINT:
-        hdc = BeginPaint(hWnd, &ps);
+		hdc = BeginPaint(hWnd, &ps);
 
-        // Here your application is laid out.
+		// Here your application is laid out.
 		MAINAPP->AppPaint(hdc);
-        // End application-specific layout section.
+		// End application-specific layout section.
 
-        EndPaint(hWnd, &ps);
-        return 0;
-    case WM_DESTROY:
+		EndPaint(hWnd, &ps);
+		return 0;
+	case WM_DESTROY:
 		MAINAPP->AppEnd();
-        PostQuitMessage(0);
+		PostQuitMessage(0);
 		return 0;
 	case WM_CREATE:
 		MAINAPP->AppStart();
@@ -231,45 +231,64 @@ LRESULT CALLBACK PlaylistExtractor::WndProc(HWND hWnd, UINT message, WPARAM wPar
 		MAINAPP->OnResize();
 
 		return 0;
-    default:
-        return DefWindowProc(hWnd, message, wParam, lParam);
-        break;
-    }
+	default:
+		return DefWindowProc(hWnd, message, wParam, lParam);
+		break;
+	}
 }
 
 // app functions
 void PlaylistExtractor::AppStart()
 {
 	ENGINE->SetDefaultFont(m_hMainWnd);
+	HFONT font = ENGINE->GetDefaultFont();
+
 
 	// toolbar
 	m_pTBMain = new Toolbar(m_hMainWnd);
 	m_pTBMain->Show();
 
 	// lists
-	m_pLBMusicList = new ListView(m_hMainWnd);
+	m_pLBMusicList = new ListView();
+	m_pLBMusicList->Create(m_hMainWnd);
 	m_pLBMusicList->Show();
-	ENGINE->SetDefaultFont(m_pLBMusicList->GetWindow());
+	m_pLBMusicList->SetFont(font);
+	
 
 	//textbox
-	m_pTxtDirection = new TextBox(_T("C:\\"), m_hMainWnd);
+	m_pTxtDirection = new TextBox();
+	m_pTxtDirection->Create(m_hMainWnd);
+	m_pTxtDirection->SetText(_T("C:\\"));
 	m_pTxtDirection->SetEnabled(false);
 	m_pTxtDirection->Show();
-	ENGINE->SetDefaultFont(m_pTxtDirection->GetWindow());
+	m_pTxtDirection->SetFont(font);
 
 	// buttons
-	m_pBtnCopie = new Button(m_hMainWnd, _T("Copy files"));
+	m_pBtnCopie = new Button();
+	m_pBtnCopie->Create(m_hMainWnd);
+	m_pBtnCopie->SetText(_T("Copy files"));
 	m_pBtnCopie->Show();
 	m_pBtnCopie->SetActionListener(this);
-	ENGINE->SetDefaultFont(m_pBtnCopie->GetWindow());
+	m_pBtnCopie->SetFont(font);
 	
-	m_pBtnCopieDir = new Button(m_hMainWnd, _T("Change"));
+	m_pBtnCopieDir = new Button();
+	m_pBtnCopieDir->Create(m_hMainWnd);
+	m_pBtnCopieDir->SetText(_T("Change"));
 	m_pBtnCopieDir->Show();
 	m_pBtnCopieDir->SetActionListener(this);
-	ENGINE->SetDefaultFont(m_pBtnCopieDir->GetWindow());
+	m_pBtnCopieDir->SetFont(font);
+
+	// checkbox
+	m_pChkMove = new Checkbox();
+	m_pChkMove->Create(m_hMainWnd);
+	m_pChkMove->SetText(_T("Move"));
+	m_pChkMove->Show();
+	m_pChkMove->SetActionListener(this);
+	m_pChkMove->SetFont(font);
 
 	// progbar
-	m_pProgBarCopying = new ProgBar(m_hMainWnd);
+	m_pProgBarCopying = new ProgBar();
+	m_pProgBarCopying->Create(m_hMainWnd);
 	m_pProgBarCopying->SetStep(1);
 
 	//disable btns
@@ -295,6 +314,8 @@ void PlaylistExtractor::AppEnd()
 
 	delete m_pBtnCopie;
 	delete m_pBtnCopieDir;
+
+	delete m_pChkMove;
 
 	delete m_pProgBarCopying;
 }
@@ -423,6 +444,9 @@ void PlaylistExtractor::OnResize()
 	
 	m_pBtnCopieDir->SetBounds(m_ClientWidth - 70, m_ClientHeight - 57, 60, 20);
 	
+	//checkbox
+	m_pChkMove->SetBounds((m_ClientWidth / 2) + 44, m_ClientHeight - 30, 80, 20);
+
 	// progbar
 	m_pProgBarCopying->SetBounds(10, m_ClientHeight - 30, m_ClientWidth - 90, 20);
 }
@@ -465,7 +489,7 @@ void PlaylistExtractor::CopyAbort()
 								NULL, // param to thread func 
 								CREATE_SUSPENDED, // creation flag 
 								NULL);       // 
-  			 
+			 
 		ResumeThread(hThread);
 			
 		SetThreadPriority(hThread,THREAD_PRIORITY_HIGHEST);	
@@ -484,6 +508,9 @@ void PlaylistExtractor::CallAction(Callable* caller)
 	// the actual copying
 	if (caller == m_pBtnCopie)
 		CopyAbort();
+
+	if (caller == m_pChkMove)
+		m_pChkMove->SetChecked(!m_pChkMove->GetChecked ());
 }
 
 ////////////////
@@ -521,7 +548,15 @@ int PlaylistExtractor::DoCopy()
 				sFileDir = /*m_sHardDrive +*/ m_SongList[i].strDir;
 			sNewFileName = sCopieDir + sFileDir.substr(sFileDir.find_last_of('\\'));
 
-			bSucces = CopyFile(sFileDir.c_str(), sNewFileName.c_str(), false);
+			if (m_pChkMove->GetChecked())
+			{
+				bSucces = MoveFile(sFileDir.c_str(), sNewFileName.c_str());
+			}
+			else
+			{
+				bSucces = CopyFile(sFileDir.c_str(), sNewFileName.c_str(), false);
+			}
+
 			//DWORD error = GetLastError();
 			//ENGINE->DispErr(error);
 
@@ -558,6 +593,8 @@ void PlaylistExtractor::StartCopy()
 	m_pTBMain->DisableBtnClose();
 	m_pTBMain->BtnCopyToAbort();
 
+	m_pChkMove->Hide();
+
 	//show progbar and set range
 	m_pProgBarCopying->SetRange(m_SongList.size());
 	m_pProgBarCopying->Show();
@@ -565,6 +602,8 @@ void PlaylistExtractor::StartCopy()
 void PlaylistExtractor::EndCopy()
 {
 	m_pProgBarCopying->Hide();
+
+	m_pChkMove->Show();
 
 	// enable buttons / list
 	//m_pLBMusicList->SetEnabled(true);

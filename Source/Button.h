@@ -8,42 +8,21 @@
 //-----------------------------------------------------------------
 // Button Class
 //-----------------------------------------------------------------
-class Button: public Callable
+class Button: public Control, public Callable
 {
 public:
-	Button(HWND hWnd, tstring const& textRef);
-	Button(HWND hWnd);
-
+	Button();
 	virtual ~Button();
 
-	void SetBounds(int x, int y, int width, int height);
-	tstring GetText();
-	void SetText(tstring const& textRef);
-	void SetFont(tstring const& fontNameRef, bool bold, bool italic, bool underline, int size);
-	RECT GetRect();
-	void SetEnabled(bool bEnable);
-	void Update(void);
-	void Show();
-	void Hide();
-
-	HWND GetWindow();
+protected:
+	virtual HWND CreateHandle(HWND hWnd) override;
+	virtual LRESULT Procedure(HWND hWindow, UINT msg, WPARAM wParam, LPARAM lParam) override;
 
 private:
 	// -------------------------
 	// Datamembers
 	// -------------------------
-	int m_x, m_y;
-	HWND m_hWndButton;
-	WNDPROC m_procOldButton;
-	HFONT m_Font, m_OldFont;
-
 	bool m_Armed;
-
-	// -------------------------
-	// Handler functions
-	// -------------------------	
-	static LRESULT CALLBACK ButtonProcStatic(HWND hWindow, UINT msg, WPARAM wParam, LPARAM lParam);
-	LRESULT ButtonProc(HWND hWindow, UINT msg, WPARAM wParam, LPARAM lParam);
 		
 	// -------------------------
 	// Disabling default copy constructor and default assignment operator.

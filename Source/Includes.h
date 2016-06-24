@@ -15,13 +15,8 @@
 #include "Callable.h"
 
 #include "ProjUtil.h"
-#include "Button.h"
-#include "ListView.h"
-#include "ComboBox.h"
-#include "TextBox.h"
-#include "ProgBar.h"
-#include "Toolbar.h"
-//#include "Bitmap.h"
+
+#include "Control.h"
 
 #include "resource.h"
 

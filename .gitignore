@@ -1,3 +1,7 @@
+[Dd]ebug
+[Rr]elease
+.vs
+
 # Compiled Object files
 *.slo
 *.lo

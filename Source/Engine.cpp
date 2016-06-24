@@ -56,11 +56,11 @@ void Engine::SetFont(tstring const& fontNameRef, bool bold, bool italic, bool un
 	ft.lfStrikeOut = 0;
 	ft.lfUnderline = underline?1:0;
 	ft.lfHeight = size;
-    ft.lfEscapement = 0;
+	ft.lfEscapement = 0;
 	ft.lfWeight = bold?FW_BOLD:0;
 	ft.lfItalic = italic?1:0;
 
-    m_FontDraw = CreateFontIndirect(&ft);
+	m_FontDraw = CreateFontIndirect(&ft);
 }
 
 // paint
@@ -72,7 +72,7 @@ bool Engine::Repaint(HWND hWnd)
 //other
 bool Engine::FolderExists(tstring strFolderName)
 {
-    return GetFileAttributes(strFolderName.c_str()) != INVALID_FILE_ATTRIBUTES;  
+	return GetFileAttributes(strFolderName.c_str()) != INVALID_FILE_ATTRIBUTES;  
 }
 
 tstring Engine::OpenFileWnd(HWND hWnd)
@@ -156,34 +156,37 @@ HBRUSH Engine::GetBackGroundColor()
 	return CreateSolidBrush(RGB(255, 255, 255));
 }
 
+HFONT Engine::GetDefaultFont()
+{
+	return m_FontDraw;
+}
+
 void Engine::SetDefaultFont (HWND hwnd)
 {
-    SendMessage(hwnd, WM_SETFONT, (WPARAM)m_FontDraw, (LPARAM)true);
-
-    return;
+	SendMessage(hwnd, WM_SETFONT, (WPARAM)m_FontDraw, (LPARAM)true);
 }
 
 void Engine::DispErr(int nError)
 {
-    static TCHAR szErrorText[1024];
-    if( FormatMessage(FORMAT_MESSAGE_IGNORE_INSERTS|FORMAT_MESSAGE_FROM_SYSTEM,NULL,nError,0,szErrorText,1024,NULL) ){
-        MessageBox(NULL,szErrorText,_T("Error"),MB_OK|MB_ICONERROR);
-    }
+	static TCHAR szErrorText[1024];
+	if( FormatMessage(FORMAT_MESSAGE_IGNORE_INSERTS|FORMAT_MESSAGE_FROM_SYSTEM,NULL,nError,0,szErrorText,1024,NULL) ){
+		MessageBox(NULL,szErrorText,_T("Error"),MB_OK|MB_ICONERROR);
+	}
 }
 
 unsigned long Engine::GetFileSize(const tstring& fileName)
 {
-    BOOL                        fOk;
-    WIN32_FILE_ATTRIBUTE_DATA   fileInfo;
+	BOOL                        fOk;
+	WIN32_FILE_ATTRIBUTE_DATA   fileInfo;
 
-    if (_T("") == fileName)
-        return -1;
+	if (_T("") == fileName)
+		return -1;
 
-    fOk = GetFileAttributesEx(fileName.c_str(), GetFileExInfoStandard, (void*)&fileInfo);
-    if (!fOk)
-        return -1;
-    //assert(0 == fileInfo.nFileSizeHigh);
-    return fileInfo.nFileSizeLow;
+	fOk = GetFileAttributesEx(fileName.c_str(), GetFileExInfoStandard, (void*)&fileInfo);
+	if (!fOk)
+		return -1;
+	//assert(0 == fileInfo.nFileSizeHigh);
+	return fileInfo.nFileSizeLow;
 }
 
 unsigned long Engine::ByteToMegaBytes(unsigned long Bytes)

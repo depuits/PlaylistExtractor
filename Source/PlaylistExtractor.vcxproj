@@ -95,6 +95,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Checkbox.cpp" />
+    <ClCompile Include="Control.cpp" />
     <ClCompile Include="PlaylistExtractor.cpp" />
     <ClCompile Include="Search.cpp" />
     <ClCompile Include="Button.cpp" />
@@ -108,6 +110,8 @@
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Checkbox.h" />
+    <ClInclude Include="Control.h" />
     <ClInclude Include="PlaylistExtractor.h" />
     <ClInclude Include="ProjUtil.h" />
     <ClInclude Include="Search.h" />

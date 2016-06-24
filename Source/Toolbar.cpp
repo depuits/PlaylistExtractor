@@ -10,9 +10,9 @@ Toolbar::Toolbar(HWND hwnd) : m_x(0), m_y(0), m_BgColor(RGB(255, 255, 255)), m_F
 {
 	// Create the edit box
 	m_hWndEdit = CreateWindowEx(NULL, TOOLBARCLASSNAME, NULL, 
-        WS_CHILD | TBSTYLE_WRAPABLE | TBSTYLE_TRANSPARENT,
-        0, 0, 0, 0,
-        hwnd, NULL, NULL, NULL);
+		WS_CHILD | TBSTYLE_WRAPABLE | TBSTYLE_TRANSPARENT,
+		0, 0, 0, 0,
+		hwnd, NULL, NULL, NULL);
 
 	Initialize();
 
@@ -52,62 +52,62 @@ Toolbar::~Toolbar()
 void Toolbar::Initialize()
 {
 	// Define some constants.
-    const int numButtons = 9;
-    const DWORD buttonStyles = BTNS_AUTOSIZE;
-    const int bitmapSize = 16;
+	const int numButtons = 9;
+	const DWORD buttonStyles = BTNS_AUTOSIZE;
+	const int bitmapSize = 16;
 
 
-    // Create the imagelist.
+	// Create the imagelist.
 	HIMAGELIST hImageList = ImageList_Create(
-        bitmapSize, bitmapSize,   // Dimensions of individual bitmaps.
-        ILC_COLOR16 | ILC_MASK,   // Ensures transparent background.
-        numButtons, 0);
+		bitmapSize, bitmapSize,   // Dimensions of individual bitmaps.
+		ILC_COLOR16 | ILC_MASK,   // Ensures transparent background.
+		numButtons, 0);
 
-    // Set the image list.
-    SendMessage(m_hWndEdit, TB_SETIMAGELIST, (WPARAM)0, 
-      (LPARAM)hImageList);
+	// Set the image list.
+	SendMessage(m_hWndEdit, TB_SETIMAGELIST, (WPARAM)0, 
+	  (LPARAM)hImageList);
  
 	
-    // Load the button images.
+	// Load the button images.
 	SendMessage(m_hWndEdit, TB_LOADIMAGES, (WPARAM)IDB_STD_SMALL_COLOR, 
-        (LPARAM)HINST_COMMCTRL);
+		(LPARAM)HINST_COMMCTRL);
 
-    // Initialize button info.
-    TBBUTTON tbButtons[numButtons] = 
-    {
-        { MAKELONG(STD_FILEOPEN, 0), IDM_OPEN, TBSTATE_ENABLED, 
-          buttonStyles, {0}, 0, (INT_PTR)L"Open" },
+	// Initialize button info.
+	TBBUTTON tbButtons[numButtons] = 
+	{
+		{ MAKELONG(STD_FILEOPEN, 0), IDM_OPEN, TBSTATE_ENABLED, 
+		  buttonStyles, {0}, 0, (INT_PTR)L"Open" },
 
-        { MAKELONG(STD_DELETE, 0), IDM_CLOSE, TBSTATE_ENABLED, 
-          buttonStyles, {0}, 0, (INT_PTR)L"Close"},
+		{ MAKELONG(STD_DELETE, 0), IDM_CLOSE, TBSTATE_ENABLED, 
+		  buttonStyles, {0}, 0, (INT_PTR)L"Close"},
 
-        { 0, 0, 0, 
-          BTNS_SEP, {0}, 0, 0},
-        
-		{ MAKELONG(STD_FIND, 0), IDM_FIND, TBSTATE_ENABLED,
-          buttonStyles, {0}, 0, (INT_PTR)L"Find..."},
+		{ 0, 0, 0, 
+		  BTNS_SEP, {0}, 0, 0},
+		
+		{ MAKELONG(STD_FIND, 0), IDM_FIND, 0,
+		  buttonStyles, {0}, 0, (INT_PTR)L"Find..."},
 
-        { 0, 0, 0, 
-          BTNS_SEP, {0}, 0, 0},
+		{ 0, 0, 0, 
+		  BTNS_SEP, {0}, 0, 0},
 
-        { MAKELONG(IDB_TB_CHECK1, 0), IDM_CLOSE, 0, 
-          buttonStyles, {0}, 0, (INT_PTR)L"Select"},
+		{ MAKELONG(IDB_TB_CHECK1, 0), IDM_CLOSE, 0, 
+		  buttonStyles, {0}, 0, (INT_PTR)L"Select"},
 
-        { MAKELONG(IDB_TB_CHECK0, 0), IDM_CLOSE, 0, 
-          buttonStyles, {0}, 0, (INT_PTR)L"Deselect"},
+		{ MAKELONG(IDB_TB_CHECK0, 0), IDM_CLOSE, 0, 
+		  buttonStyles, {0}, 0, (INT_PTR)L"Deselect"},
 
-        { 0, 0, 0, 
-          BTNS_SEP, {0}, 0, 0},
+		{ 0, 0, 0, 
+		  BTNS_SEP, {0}, 0, 0},
 
-        { MAKELONG(STD_COPY, 0), IDM_COPY, TBSTATE_ENABLED,
-          buttonStyles, {0}, 0, (INT_PTR)L"Copy"}
-    };
+		{ MAKELONG(STD_COPY, 0), IDM_COPY, TBSTATE_ENABLED,
+		  buttonStyles,{ 0 }, 0, (INT_PTR)L"Copy" }
+	};
 
-    // Add buttons.
-    SendMessage(m_hWndEdit, TB_BUTTONSTRUCTSIZE, 
-        (WPARAM)sizeof(TBBUTTON), 0);
-    SendMessage(m_hWndEdit, TB_ADDBUTTONS, (WPARAM)numButtons, 
-        (LPARAM)&tbButtons);
+	// Add buttons.
+	SendMessage(m_hWndEdit, TB_BUTTONSTRUCTSIZE, 
+		(WPARAM)sizeof(TBBUTTON), 0);
+	SendMessage(m_hWndEdit, TB_ADDBUTTONS, (WPARAM)numButtons, 
+		(LPARAM)&tbButtons);
 }
 
 void Toolbar::SetBounds(int x, int y, int width, int height)
@@ -184,7 +184,7 @@ void Toolbar::SetFont(tstring const& fontNameRef, bool bold, bool italic, bool u
 	ft.lfStrikeOut = 0;
 	ft.lfUnderline = underline?1:0;
 	ft.lfHeight = size;
-    ft.lfEscapement = 0;
+	ft.lfEscapement = 0;
 	ft.lfWeight = bold?FW_BOLD:0;
 	ft.lfItalic = italic?1:0;
 
@@ -192,7 +192,7 @@ void Toolbar::SetFont(tstring const& fontNameRef, bool bold, bool italic, bool u
 	if (m_Font != 0) { DeleteObject(m_Font); }
 
 	// create the new font. The WM_CTLCOLOREDIT message will set the font when the textbox is about to redraw
-    m_Font = CreateFontIndirect(&ft);
+	m_Font = CreateFontIndirect(&ft);
 
 	// redraw the textbox
 	InvalidateRect(m_hWndEdit, NULL, true);
@@ -269,22 +269,22 @@ HWND Toolbar::GetWindow()
 void Toolbar::EnableBtnOpen()
 {
 	SendMessage(m_hWndEdit, TB_ENABLEBUTTON, (WPARAM)IDM_OPEN, 
-        (LPARAM)true);
+		(LPARAM)true);
 }
 void Toolbar::DisableBtnOpen()
 {
 	SendMessage(m_hWndEdit, TB_ENABLEBUTTON, (WPARAM)IDM_OPEN, 
-        (LPARAM)false);
+		(LPARAM)false);
 }
 void Toolbar::EnableBtnClose()
 {
 	SendMessage(m_hWndEdit, TB_ENABLEBUTTON, (WPARAM)IDM_CLOSE, 
-        (LPARAM)true);
+		(LPARAM)true);
 }
 void Toolbar::DisableBtnClose()
 {
 	SendMessage(m_hWndEdit, TB_ENABLEBUTTON, (WPARAM)IDM_CLOSE, 
-        (LPARAM)false);
+		(LPARAM)false);
 }
 
 void Toolbar::BtnCopyToAbort()
@@ -299,7 +299,7 @@ void Toolbar::BtnCopyToAbort()
 
 	//change bmp
 	SendMessage(m_hWndEdit, TB_CHANGEBITMAP, (WPARAM)IDM_COPY, 
-        (LPARAM)MAKELONG(STD_DELETE, 0));
+		(LPARAM)MAKELONG(STD_DELETE, 0));
 }
 void Toolbar::BtnAbortToCopy()
 {
@@ -313,5 +313,5 @@ void Toolbar::BtnAbortToCopy()
 
 	//change bmp
 	SendMessage(m_hWndEdit, TB_CHANGEBITMAP, (WPARAM)IDM_COPY, 
-        (LPARAM)MAKELONG(STD_COPY, 0));
+		(LPARAM)MAKELONG(STD_COPY, 0));
 }

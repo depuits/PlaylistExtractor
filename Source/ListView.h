@@ -9,26 +9,14 @@
 // ListView Class
 //-----------------------------------------------------------------
 
-class ListView
+class ListView : public Control
 {
 public:
-	ListView(HWND hwnd);
-
+	ListView();
 	virtual ~ListView();
 
-	void SetBounds(int x, int y, int width, int height);
-	void SetFont(tstring const& fontNameRef, bool bold, bool italic, bool underline, int size);
-	void SetBackcolor( COLORREF color );
-	void SetForecolor( COLORREF color );
-	COLORREF GetForecolor();
-	COLORREF GetBackcolor();
-	HBRUSH GetBackcolorBrush();
-	RECT GetRect();
-	void SetEnabled(bool bEnable);
-	void Update(void);
-	void Show();
-	void Hide();
-
+	virtual void Create(HWND hWnd) override;
+	
 	void AddItem(tstring const& sName, tstring const& sSize);
 	void RemoveItem(int index);
 
@@ -44,26 +32,12 @@ public:
 
 	void SortOnIndex();
 
-	HWND GetWindow();
+protected:
+	virtual HWND CreateHandle(HWND hWnd) override;
+	virtual LRESULT Procedure(HWND hWindow, UINT msg, WPARAM wParam, LPARAM lParam) override;
 
 private:
-	void AddCollumns();
-
-	// -------------------------
-	// Datamembers
-	// -------------------------
-	int m_x, m_y;
-	HWND m_hWndEdit;
-	WNDPROC m_procOldEdit;
-	COLORREF m_BgColor, m_ForeColor;
-	HBRUSH m_BgColorBrush;
-	HFONT m_Font, m_OldFont;
-
-	// -------------------------
-	// Handler functions
-	// -------------------------	
-	static LRESULT CALLBACK EditProcStatic(HWND hWindow, UINT msg, WPARAM wParam, LPARAM lParam);
-	LRESULT EditProc(HWND hWindow, UINT msg, WPARAM wParam, LPARAM lParam);
+	void AddCollumns(); //TODO make more dynamic
 		
 	// -------------------------
 	// Disabling default copy constructor and default assignment operator.

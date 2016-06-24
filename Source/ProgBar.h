@@ -8,20 +8,12 @@
 //-----------------------------------------------------------------
 // ProgressBar Class
 //-----------------------------------------------------------------
-class ProgBar
+class ProgBar : public Control
 {
 public:
-	ProgBar(HWND hWnd);
-
+	ProgBar();
 	virtual ~ProgBar();
-
-	void SetBounds(int x, int y, int width, int height);
-	RECT GetRect();
-	void SetEnabled(bool bEnable);
-	void Update(void);
-	void Show();
-	void Hide();
-
+	
 	void SetRange(int r);
 	void SetPos(int p);
 	void AddToPos(int a);
@@ -29,22 +21,10 @@ public:
 	void SetStep(int s);
 	void AddStep();
 
-	HWND GetWindow();
+protected:
+	virtual HWND CreateHandle(HWND hWnd) override;
 
 private:
-	// -------------------------
-	// Datamembers
-	// -------------------------
-	int m_x, m_y;
-	HWND m_hWnd;
-	WNDPROC m_procOldProgBar;
-
-	// -------------------------
-	// Handler functions
-	// -------------------------	
-	static LRESULT CALLBACK ProgBarProcStatic(HWND hWindow, UINT msg, WPARAM wParam, LPARAM lParam);
-	LRESULT ProgBarProc(HWND hWindow, UINT msg, WPARAM wParam, LPARAM lParam);
-		
 	// -------------------------
 	// Disabling default copy constructor and default assignment operator.
 	// If you get a linker error from one of these functions, your class is internally trying to use them. This is

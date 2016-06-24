@@ -27,7 +27,8 @@ public:
 
 	HBRUSH GetBackGroundColor();
 
-	void SetDefaultFont (HWND hwnd);
+	HFONT GetDefaultFont();
+	void SetDefaultFont(HWND hwnd);
 
 	void DispErr(int nError);
 

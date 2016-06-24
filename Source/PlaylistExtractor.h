@@ -2,6 +2,14 @@
 
 #include "Includes.h"
 
+#include "Button.h"
+#include "ListView.h"
+#include "ComboBox.h"
+#include "Checkbox.h"
+#include "TextBox.h"
+#include "ProgBar.h"
+#include "Toolbar.h"
+
 struct Song
 {
 	Song(tstring name, tstring dir): 
@@ -86,6 +94,8 @@ private:
 
 	Button	*m_pBtnCopie,
 			*m_pBtnCopieDir;
+
+	Checkbox *m_pChkMove;
 
 	Toolbar *m_pTBMain;
 
