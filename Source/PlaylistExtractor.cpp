@@ -17,7 +17,7 @@ m_ClientHeight(410),
 m_isCopie(false),
 
 m_sBugReport(_T("To report a bug send a mail to\ncolmanjoeri@gmail.com\nor go to\nhttps://sourceforge.net/projects/playlistextract/")),
-m_sAbout(_T("Made by Joeri Colman\nVersion: 0.06")),
+m_sAbout(_T("Made by Joeri Colman\nVersion: 0.07")),
 
 m_pLBMusicList(0),
 m_pTxtDirection(0),
@@ -333,23 +333,23 @@ void PlaylistExtractor::ReadInList(tstring str)
 		{
 			do
 			{
-				if (line.length() <= 0)
-					continue;
-
-				TCHAR check = *line.substr(0, 1).c_str();
-				if (check == '#')
-					continue;
-				
-				name = line.substr(line.find_last_of('\\') +1);
-				name = name.substr(0, name.find_last_of('.'));
-
-				if (line.length() > 0)
+				if (line.length () > 0)
 				{
-					m_SongList.push_front(Song(name, line));
+					TCHAR check = *line.substr (0, 1).c_str ();
+					if (check != '#')
+					{
+						name = line.substr (line.find_last_of ('\\') + 1);
+						name = name.substr (0, name.find_last_of ('.'));
 
-					tstringstream stream;
-					stream << ENGINE->ByteToKiloBytes(ENGINE->GetFileSize(/*m_sHardDrive +*/ line)) << " KB";
-					m_pLBMusicList->AddItem(name , stream.str());
+						if (line.length () > 0)
+						{
+							m_SongList.push_front (Song (name, line));
+
+							tstringstream stream;
+							stream << ENGINE->ByteToKiloBytes (ENGINE->GetFileSize (/*m_sHardDrive +*/ line)) << " KB";
+							m_pLBMusicList->AddItem (name, stream.str ());
+						}
+					}
 				}
 
 				getline (myfile, line);
