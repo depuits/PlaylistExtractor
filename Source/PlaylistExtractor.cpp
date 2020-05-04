@@ -7,27 +7,27 @@ PlaylistExtractor* PlaylistExtractor::m_pApp = 0;
 
 //methods
 PlaylistExtractor::PlaylistExtractor():
-CallerPtr(),
-m_hAppInst(0),
-m_hMainWnd(0),
+	CallerPtr(),
+	m_hAppInst(0),
+	m_hMainWnd(0),
 
-m_ClientWidth(410),
-m_ClientHeight(410),
+	m_ClientWidth(410),
+	m_ClientHeight(410),
 
-m_isCopie(false),
+	m_isCopie(false),
 
-m_sBugReport(_T("To report a bug send a mail to\ncolmanjoeri@gmail.com\nor go to\nhttps://sourceforge.net/projects/playlistextract/")),
-m_sAbout(_T("Made by Joeri Colman\nVersion: 0.07")),
+	m_sBugReport(_T("To report a bug go to\nhttps://github.com/depuits/PlaylistExtractor/issues")),
+	m_sAbout(_T("Made by Joeri Colman\nVersion: 0.08")),
 
-m_pLBMusicList(0),
-m_pTxtDirection(0),
-m_pBtnCopie(0),
-m_pBtnCopieDir(0),
+	m_pLBMusicList(0),
+	m_pTxtDirection(0),
+	m_pBtnCopie(0),
+	m_pBtnCopieDir(0),
 
-m_pTBMain(0),
-m_pProgBarCopying(0),
+	m_pTBMain(0),
+	m_pProgBarCopying(0),
 
-m_sHardDrive(_T(""))
+	m_sHardDrive(_T(""))
 {
 }
 PlaylistExtractor::~PlaylistExtractor()
