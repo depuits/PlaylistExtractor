@@ -38,6 +38,7 @@ public:
 	void AppEnd();
 	void OnResize();
 
+	void ToggleEncoding(bool old);
 	void ReadInList(tstring str);
 
 	unsigned long Totalsize();
@@ -47,12 +48,14 @@ public:
 	void StartCopy();
 	void EndCopy();
 
+
 	void OpenList();
 	void CloseList();
 
 	void CopyAbort();
 
 	void EnableMainMenuItems(bool open, bool close);
+	void SetMainMenuCopyText(LPCTSTR text);
 
 	//start other windows
 	void StartAbout();
@@ -83,7 +86,8 @@ private:
 	int m_ClientWidth,
 		m_ClientHeight;
 
-	bool m_isCopie;
+	bool m_isCopie,
+		 m_useOldEncoding;
 
 	tstring m_sBugReport;
 	tstring m_sAbout;

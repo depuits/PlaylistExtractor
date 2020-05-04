@@ -7,6 +7,8 @@
 
 #define IDM_COPY		204
 #define IDM_FIND		205
+#define IDM_ENC_ANSI	206
+#define IDM_ENC_UTF8	207
 
 #define IDM_ABOUT		210
 #define IDM_BUGR		211

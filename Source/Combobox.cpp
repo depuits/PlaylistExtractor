@@ -37,7 +37,7 @@ LRESULT Combobox::Procedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			}
 			ListboxItemChange(hWnd, item);*/
 			//CallerPtrCombobox(this);
-			//MessageBox(NULL, L"TEST", L"TEST", NULL);
+			//MessageBox(NULL, _T("TEST"), _T("TEST"), NULL);
 		}
 		break;
 	}

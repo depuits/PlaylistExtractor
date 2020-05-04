@@ -76,31 +76,31 @@ void Toolbar::Initialize()
 	TBBUTTON tbButtons[numButtons] = 
 	{
 		{ MAKELONG(STD_FILEOPEN, 0), IDM_OPEN, TBSTATE_ENABLED, 
-		  buttonStyles, {0}, 0, (INT_PTR)L"Open" },
+		  buttonStyles, {0}, 0, (INT_PTR)_T("Open")},
 
 		{ MAKELONG(STD_DELETE, 0), IDM_CLOSE, TBSTATE_ENABLED, 
-		  buttonStyles, {0}, 0, (INT_PTR)L"Close"},
+		  buttonStyles, {0}, 0, (INT_PTR)_T("Close")},
 
 		{ 0, 0, 0, 
 		  BTNS_SEP, {0}, 0, 0},
 		
 		{ MAKELONG(STD_FIND, 0), IDM_FIND, 0,
-		  buttonStyles, {0}, 0, (INT_PTR)L"Find..."},
+		  buttonStyles, {0}, 0, (INT_PTR)_T("Find...")},
 
 		{ 0, 0, 0, 
 		  BTNS_SEP, {0}, 0, 0},
 
 		{ MAKELONG(IDB_TB_CHECK1, 0), IDM_CLOSE, 0, 
-		  buttonStyles, {0}, 0, (INT_PTR)L"Select"},
+		  buttonStyles, {0}, 0, (INT_PTR)_T("Select")},
 
 		{ MAKELONG(IDB_TB_CHECK0, 0), IDM_CLOSE, 0, 
-		  buttonStyles, {0}, 0, (INT_PTR)L"Deselect"},
+		  buttonStyles, {0}, 0, (INT_PTR)_T("Deselect")},
 
 		{ 0, 0, 0, 
 		  BTNS_SEP, {0}, 0, 0},
 
 		{ MAKELONG(STD_COPY, 0), IDM_COPY, TBSTATE_ENABLED,
-		  buttonStyles,{ 0 }, 0, (INT_PTR)L"Copy" }
+		  buttonStyles,{ 0 }, 0, (INT_PTR)_T("Copy")}
 	};
 
 	// Add buttons.

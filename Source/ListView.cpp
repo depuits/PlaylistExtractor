@@ -78,7 +78,7 @@ void ListView::AddItem(tstring const& sName, tstring const& sSize)
 	lvI.iImage = 0;
 	lvI.iSubItem = 0;
 	lvI.lParam = (LPARAM)sName.c_str();
-	lvI.pszText = (LPWSTR)sName.c_str();
+	lvI.pszText = (LPTSTR)sName.c_str();
 
 	int index = SendMessage(GetWindow(),
 		LVM_INSERTITEM,
@@ -92,7 +92,7 @@ void ListView::AddItem(tstring const& sName, tstring const& sSize)
 	lvI.iImage = 0;
 	lvI.iSubItem = 1;
 	lvI.lParam = (LPARAM)index;
-	lvI.pszText = (LPWSTR)sSize.c_str();
+	lvI.pszText = (LPTSTR)sSize.c_str();
 
 	SendMessage(GetWindow(),
 		LVM_SETITEM,

@@ -3,6 +3,8 @@
 #include "Search.h"
 #define SEARCH (Search::GetSingleton())
 
+#include <codecvt>
+
 PlaylistExtractor* PlaylistExtractor::m_pApp = 0;
 
 //methods
@@ -15,6 +17,7 @@ PlaylistExtractor::PlaylistExtractor():
 	m_ClientHeight(410),
 
 	m_isCopie(false),
+	m_useOldEncoding(false),
 
 	m_sBugReport(_T("To report a bug go to\nhttps://github.com/depuits/PlaylistExtractor/issues")),
 	m_sAbout(_T("Made by Joeri Colman\nVersion: 0.08")),
@@ -23,6 +26,7 @@ PlaylistExtractor::PlaylistExtractor():
 	m_pTxtDirection(0),
 	m_pBtnCopie(0),
 	m_pBtnCopieDir(0),
+	m_pChkMove(0),
 
 	m_pTBMain(0),
 	m_pProgBarCopying(0),
@@ -212,6 +216,12 @@ LRESULT CALLBACK PlaylistExtractor::WndProc(HWND hWnd, UINT message, WPARAM wPar
 		case IDM_FIND:
 			//SEARCH->OpenWnd();
 			return 0;
+		case IDM_ENC_ANSI:
+			MAINAPP->ToggleEncoding(true);
+			return 0;
+		case IDM_ENC_UTF8:
+			MAINAPP->ToggleEncoding(false);
+			return 0;
 
 		case IDM_ABOUT:
 			MAINAPP->StartAbout();
@@ -320,11 +330,31 @@ void PlaylistExtractor::AppEnd()
 	delete m_pProgBarCopying;
 }
 
+void PlaylistExtractor::ToggleEncoding(bool old)
+{
+	m_useOldEncoding = old;
+
+	HMENU hResMenu = GetMenu(m_hMainWnd);
+	HMENU hMenu = GetSubMenu(hResMenu, 1);
+
+	UINT flagsTrue = MF_BYCOMMAND | MF_CHECKED;
+	UINT flagsFalse = MF_BYCOMMAND | MF_UNCHECKED;
+
+	CheckMenuItem(hMenu, IDM_ENC_ANSI, old ? flagsTrue : flagsFalse);
+	CheckMenuItem(hMenu, IDM_ENC_UTF8, !old ? flagsTrue : flagsFalse);
+}
 void PlaylistExtractor::ReadInList(tstring str)
 {
 	tstring line, name;
-
 	tifstream myfile (str.c_str());
+
+	// when we are not using the old encoding then we use the utf8 encoding
+	if (!m_useOldEncoding)
+	{
+		std::locale utf8_locale(std::locale(), new std::codecvt_utf8<TCHAR, 0x10ffff, std::consume_header>);
+		myfile.imbue(utf8_locale);
+	}
+
 	if (myfile.is_open())
 	{
 		getline (myfile, line);
@@ -381,7 +411,7 @@ void PlaylistExtractor::ReadInList(tstring str)
 				getline (myfile, line);
 			}
 
-			m_pTBMain->DisableBtnOpen();			
+			m_pTBMain->DisableBtnOpen();
 			EnableMainMenuItems(false, true);
 		}
 		//pls
@@ -578,6 +608,7 @@ int PlaylistExtractor::DoCopy()
 }
 void PlaylistExtractor::StartCopy()
 {
+	SetMainMenuCopyText(_T("&Abort copy"));
 	m_pBtnCopie->SetText(_T("Abort"));
 	m_isCopie = true;
 
@@ -615,6 +646,7 @@ void PlaylistExtractor::EndCopy()
 	m_pTBMain->EnableBtnClose();
 	m_pTBMain->BtnAbortToCopy();
 
+	SetMainMenuCopyText(_T("&Copy files"));
 	m_pBtnCopie->SetText(_T("Copy files"));
 	m_isCopie = false;
 
@@ -623,9 +655,9 @@ void PlaylistExtractor::EndCopy()
 }
 void PlaylistExtractor::EnableMainMenuItems(bool open, bool close)
 { 
-	HMENU hResMenu = LoadMenu(m_hAppInst, MAKEINTRESOURCE(ID_MENU));//g_hinst->Handle to the module containing the menu resource to be loaded.
+	HMENU hResMenu = GetMenu(m_hMainWnd);
+	HMENU hMenu = GetSubMenu(hResMenu, 0);
 
-	HMENU hMenu = GetSubMenu(hResMenu,0);
 	if (open)
 		EnableMenuItem(hMenu, IDM_OPEN, MF_BYCOMMAND | MF_ENABLED);
 	else
@@ -636,14 +668,13 @@ void PlaylistExtractor::EnableMainMenuItems(bool open, bool close)
 	else
 		EnableMenuItem(hMenu, IDM_CLOSE, MF_BYCOMMAND | MF_GRAYED);
 
-	hMenu = GetSubMenu(hResMenu,1);
-	ModifyMenu(hMenu, IDM_COPY, MF_BYCOMMAND | MF_STRING, IDM_COPY, _T("&Abort Copy"));
-	//DWORD error = GetLastError();
-	//ENGINE->DispErr(error);
-
-	SetMenu (m_hMainWnd, hResMenu);
 }
-
+void PlaylistExtractor::SetMainMenuCopyText(LPCTSTR text)
+{
+	HMENU hResMenu = GetMenu(m_hMainWnd);
+	HMENU hMenu = GetSubMenu(hResMenu, 1);
+	ModifyMenu(hMenu, IDM_COPY, MF_BYCOMMAND | MF_STRING, IDM_COPY, text);
+}
 
 //start other windows
 void PlaylistExtractor::StartAbout()
