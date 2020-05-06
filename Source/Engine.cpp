@@ -85,7 +85,7 @@ tstring Engine::OpenFileWnd(HWND hWnd)
 
 	ofn.lStructSize = sizeof(ofn); // SEE NOTE BELOW
 	ofn.hwndOwner = hWnd;
-	ofn.lpstrFilter = _T("M3U Playlist (*.m3u)\0*.m3u\0M3U8 (Unicode) Playlist (*.m3u8)\0*.m3u8\0Windows Media Playlist (*.wpl)\0*.wpl\0All Files (*.*)\0*.*\0");//_T("M3U Playlist (*.m3u)\0*.m3u\0PLS Playlist (*.pls)\0*.pls\0M3U8 (Unicode) Playlist (*.m3u8)\0*.m3u8\0All Files (*.*)\0*.*\0");
+	ofn.lpstrFilter = _T("All supported (*.m3u, *.m3u8, *.wpl)\0*.m3u;*.m3u8;*.wpl\0M3U Playlist (*.m3u)\0*.m3u\0M3U8 (Unicode) Playlist (*.m3u8)\0*.m3u8\0Windows Media Playlist (*.wpl)\0*.wpl\0All Files (*.*)\0*.*\0");//_T("M3U Playlist (*.m3u)\0*.m3u\0PLS Playlist (*.pls)\0*.pls\0M3U8 (Unicode) Playlist (*.m3u8)\0*.m3u8\0All Files (*.*)\0*.*\0");
 	ofn.lpstrFile = szFileName;
 	ofn.nMaxFile = MAX_PATH;
 	ofn.Flags = OFN_EXPLORER | OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY | /*OFN_ALLOWMULTISELECT |*/ OFN_OVERWRITEPROMPT;

@@ -20,7 +20,7 @@ PlaylistExtractor::PlaylistExtractor():
 	m_useOldEncoding(false),
 
 	m_sBugReport(_T("To report a bug go to\nhttps://github.com/depuits/PlaylistExtractor/issues")),
-	m_sAbout(_T("Made by Joeri Colman\nVersion: 0.08")),
+	m_sAbout(_T("Made by Joeri Colman\nVersion: 0.09")),
 
 	m_pLBMusicList(0),
 	m_pTxtDirection(0),
